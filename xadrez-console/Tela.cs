@@ -8,27 +8,35 @@ namespace xadrez_console
     class Tela
     {
 
-        public static void imprimirPartida(PartidaDeXadrez partida) 
+        public static void imprimirPartida(PartidaDeXadrez partida)
         {
             imprimirTabuleiro(partida.tab);
             imprimirPecasCapturadas(partida);
             Console.WriteLine();
             Console.WriteLine("Turno: " + partida.turno);
-            Console.WriteLine("A aguardar jogada: " + partida.jogadorAtual);
-            if (partida.xeque == true) 
+
+            if (partida.terminada == false)
             {
-                Console.WriteLine("Xeque!");
+                Console.WriteLine("A aguardar jogada: " + partida.jogadorAtual);
+                if (partida.xeque == true)
+                {
+                    Console.WriteLine("Xeque!");
+                }
             }
-            
+            else 
+            {
+                Console.WriteLine("XEQUEMATE!");
+                Console.WriteLine("Vencedor: " + partida.jogadorAtual);
+            }
         }
 
-        public static void imprimirPecasCapturadas(PartidaDeXadrez partida) 
+        public static void imprimirPecasCapturadas(PartidaDeXadrez partida)
         {
             Console.WriteLine("Peças capturadas");
             Console.Write("Brancas: ");
             imprimirConjunto(partida.pecasCapturadas(Cor.Branca));
             Console.WriteLine();
-            Console.Write("Pretas: ");            
+            Console.Write("Pretas: ");
             ConsoleColor aux = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.Yellow;
             imprimirConjunto(partida.pecasCapturadas(Cor.Preta));
@@ -36,7 +44,7 @@ namespace xadrez_console
             Console.WriteLine();
         }
 
-        public static void imprimirConjunto(HashSet<Peca> conjunto) 
+        public static void imprimirConjunto(HashSet<Peca> conjunto)
         {
             Console.Write("[");
             foreach (Peca x in conjunto)
@@ -70,11 +78,11 @@ namespace xadrez_console
                 Console.Write(8 - i + " ");
                 for (int j = 0; j < tab.colunas; j++)
                 {
-                    if (posicoesPossiveis[i,j] == true) 
+                    if (posicoesPossiveis[i, j] == true)
                     {
                         Console.BackgroundColor = FundoAlterado;
                     }
-                    else 
+                    else
                     {
                         Console.BackgroundColor = FundoOriginal;
                     }
